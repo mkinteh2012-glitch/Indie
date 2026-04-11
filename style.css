@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --steam-dark: #171a21;
+    --steam-slate: #1b2838;
+    --steam-blue: #66c0f4;
+    --text-main: #dbe2e6;
+    --text-dim: #acb2b8;
+    --steam-green: #a3d200;
+}
+
+body {
+    background-color: var(--steam-dark);
+    background-image: radial-gradient(circle at top, #2a475e 0%, #171a21 70%);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 20px 40px 20px;
+    text-align: center;
+}
+
+.main-logo-img {
+    max-width: 600px;
+    width: 95%;
+    height: auto;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px rgba(102, 192, 244, 0.2));
+}
+
+h1 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+}
+
+.subtitle {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: var(--text-dim);
+}
+
+/* --- THE CLEAN RSVP FORM --- */
+.rsvp-container {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 450px;
+}
+
+#rsvpForm {
+    display: flex;
+    align-items: stretch;
+}
+
+#rsvpForm input {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #2a475e;
+    border-right: none;
+    padding: 15px;
+    color: var(--steam-blue);
+    font-family: 'Space Mono', monospace;
+    outline: none;
+}
+
+#rsvpForm .cta-button {
+    margin-top: 0; 
+    padding: 0 25px;
+    border-radius: 0 3px 3px 0;
+    background: linear-gradient(90deg, #47bfff 0%, #1a44c2 100%);
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+#statusMessage {
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    height: 1.2em;
+}
+
+/* --- CONTENT --- */
+.content {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+section { margin-bottom: 60px; }
+
+h2 {
+    font-family: 'Space Mono', monospace;
+    color: var(--steam-blue);
+    border-bottom: 1px solid #2a475e;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.math-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+}
+
+.math-card {
+    background: rgba(27, 40, 56, 0.6);
+    border: 1px solid #2a475e;
+    padding: 15px;
+    text-align: center;
+}
+
+.prize-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.prize-item {
+    background: rgba(163, 210, 0, 0.05);
+    border-left: 3px solid var(--steam-green);
+    padding: 15px;
+}
+
+.prize-item strong { display: block; color: var(--steam-green); }
+
+footer {
+    text-align: center;
+    padding: 40px;
+    font-family: 'Space Mono', monospace;
+    color: var(--text-dim);
+}
+
+.heart { color: #ff4b4b; }

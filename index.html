@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indie | Steam YSWS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="hero">
+    <img src="Indie_Logo.png" alt="Indie Logo" class="main-logo-img">
+    
+    <h1>Ship to <span class="steam-blue">Steam</span></h1>
+    <p class="subtitle">A Hack Club YSWS. Powered by <span class="highlight">Hackatime</span>.</p>
+    
+    <div class="rsvp-container">
+        <form id="rsvpForm">
+            <input type="email" id="userEmail" placeholder="Enter email to RSVP..." required>
+            <button type="submit" class="cta-button">GO</button>
+        </form>
+        <p id="statusMessage"></p>
+    </div>
+</header>
+
+<main class="content">
+    <section class="explanation">
+        <h2>// The Brief</h2>
+        <p>
+            <strong>Indie</strong> is a challenge for high schoolers who want to see their work on a global stage. 
+            Getting a game on Steam costs $100 USD—we're here to cover that for you.
+        </p>
+        <p>
+            The mission: Start a project, track your coding via <strong>Hackatime</strong>, and ship a playable build. 
+            Once your team hits the hour goal, we fund your Steam Developer License.
+        </p>
+    </section>
+
+    <section class="team-logic">
+        <h2>// The Math</h2>
+        <div class="math-grid">
+            <div class="math-card"><h3>1 Person</h3><p>30 Hours</p></div>
+            <div class="math-card"><h3>2 People</h3><p>35 Hours</p></div>
+            <div class="math-card"><h3>3 People</h3><p>40 Hours</p></div>
+            <div class="math-card"><h3>4 People</h3><p>45 Hours</p></div>
+        </div>
+    </section>
+
+    <section class="prizes">
+        <h2>// Prizes</h2>
+        <div class="prize-grid">
+            <div class="prize-item"><strong>Steam License</strong><span>Standard Reward</span></div>
+            <div class="prize-item"><strong>Nintendo Switch 2</strong><span>The Latest Console</span></div>
+            <div class="prize-item"><strong>Macbook</strong><span>Nice Computer</span></div>
+            <div class="prize-item"><strong>PC Parts</strong><span>GPUs & SSDs</span></div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>made with <span class="heart">&#10084;</span> by Hack Club</p>
+</footer>
+
+<script>
+    const rsvpForm = document.getElementById('rsvpForm');
+    const statusMessage = document.getElementById('statusMessage');
+
+    rsvpForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Use localhost for testing, change to Render/Railway URL when live
+        const BACKEND_URL = 'http://localhost:3000/api/rsvp';
+
+        const payload = {
+            email: document.getElementById('userEmail').value
+        };
+
+        try {
+            statusMessage.innerText = "> INITIALIZING...";
+            
+            const response = await fetch(BACKEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                statusMessage.innerText = "> RSVP_LOGGED. SHIP_ON.";
+                statusMessage.style.color = "#a3d200";
+                rsvpForm.reset();
+            } else {
+                statusMessage.innerText = "> ERROR: SIGNUP_FAILED";
+                statusMessage.style.color = "#ff4b4b";
+            }
+        } catch (error) {
+            statusMessage.innerText = "> ERROR: SERVER_OFFLINE";
+            statusMessage.style.color = "#ff4b4b";
+        }
+    });
+</script>
+
+</body>
+</html>
