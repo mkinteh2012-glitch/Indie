@@ -70,7 +70,7 @@
         e.preventDefault();
         
         // Use localhost for testing, change to Render/Railway URL when live
-        const BACKEND_URL = 'http://localhost:3000/api/rsvp';
+        const BACKEND_URL = '/.netlify/functions/rsvp';
 
         const payload = {
             email: document.getElementById('userEmail').value
