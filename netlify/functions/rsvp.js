@@ -1,32 +1,51 @@
 const mongoose = require('mongoose');
 
 exports.handler = async (event, context) => {
-  // Only allow POST requests
+  console.log("--- Function Started ---");
+
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
   try {
     const { email } = JSON.parse(event.body);
-    
-    // Connect to MongoDB
+    console.log("Target Email:", email);
+
+    // Check if URI exists
+    if (!process.env.MONGO_URI) {
+      console.error("CRITICAL ERROR: MONGO_URI is missing in Netlify settings!");
+      throw new Error("Database URI is missing");
+    }
+
+    // Database Connection
     if (mongoose.connection.readyState !== 1) {
+      console.log("Connecting to MongoDB Atlas...");
       await mongoose.connect(process.env.MONGO_URI);
     }
 
-    const RSVP = mongoose.model('RSVP', new mongoose.Schema({
-      email: String,
+    // Define Schema (Make sure this matches your local version)
+    const rsvpSchema = new mongoose.Schema({
+      email: { type: String, required: true, unique: true },
       date: { type: Date, default: Date.now }
-    }));
+    });
 
-    await new RSVP({ email }).save();
+    // This line prevents "OverwriteModelError"
+    const RSVP = mongoose.models.RSVP || mongoose.model('RSVP', rsvpSchema);
 
+    const newRSVP = new RSVP({ email });
+    await newRSVP.save();
+
+    console.log("SUCCESS: Email saved to Atlas.");
     return {
       statusCode: 200,
-      headers: { "Access-Control-Allow-Origin": "*" }, // Allows your frontend to talk to it
-      body: JSON.stringify({ message: "Success" }),
+      body: JSON.stringify({ message: "RSVP_SUCCESSFUL" }),
     };
-  } catch (err) {
-    return { statusCode: 500, body: err.toString() };
+
+  } catch (error) {
+    console.error("DETAILED ERROR:", error.message);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
+    };
   }
 };
